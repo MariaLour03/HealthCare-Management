@@ -241,8 +241,10 @@ public class Main {
                     Appointment newAppointment = new Appointment();
                     System.out.print("Enter Patient ID: ");
                     newAppointment.setPatientId(scanner.nextInt());
+                    scanner.nextLine();
                     System.out.print("Enter Doctor ID: ");
                     newAppointment.setDoctorId(scanner.nextInt());
+                    scanner.nextLine();
                     System.out.print("Enter Appointment Date: ");
                     newAppointment.setAppointmentDate(scanner.nextLine());
                     System.out.print("Enter Notes: ");
@@ -275,8 +277,10 @@ public class Main {
                     if (appointment != null) {
                         System.out.print("Enter Patient ID: ");
                         appointment.setPatientId(scanner.nextInt());
+                        scanner.nextLine();
                         System.out.print("Enter Doctor ID: ");
                         appointment.setDoctorId(scanner.nextInt());
+                        scanner.nextLine();
                         System.out.print("Enter Appointment Date: ");
                         appointment.setAppointmentDate(scanner.nextLine());
                         System.out.print("Enter Notes: ");
