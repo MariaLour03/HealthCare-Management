@@ -1,7 +1,14 @@
 package model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.ToString;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
+@Data
+@ToString(exclude = {"patients", "appointments"})
 @Entity
 @Table(name = "Doctors")
 public class Doctor {
@@ -22,65 +29,28 @@ public class Doctor {
     @Column(name = "Email")
     private String email;
 
-    public Doctor() {
-    }
+   // Relationship
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor")
+    private Set<Appointment> appointments = new HashSet<>();
 
-    // Parameterized constructor
-    public Doctor(String firstName, String lastName, String specialty, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.specialty = specialty;
-        this.email = email;
-    }
-
-    public int getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(int doctorId) {
-        this.doctorId = doctorId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getSpecialty() {
-        return specialty;
-    }
-
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "patient_doctor",
+            joinColumns = @JoinColumn(name  = "DoctorID"),
+            inverseJoinColumns = @JoinColumn(name = "PatientID")
+    )
+    private Set<Patient> patients = new HashSet<>();
 
     @Override
-    public String toString() {
-        return "Doctor{" +
-                "doctorId=" + doctorId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", specialty='" + specialty + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Doctor that = (Doctor) o;
+        return doctorId == that.doctorId;    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(doctorId);
     }
+
 }
