@@ -40,10 +40,6 @@ public class Patient {
     @ManyToMany(mappedBy ="patients" )
     private Set<Doctor> doctors = new HashSet<>();
 
-    //    @JoinTable(
-//       name = "patient_doctor",
-//           joinColumns = @JoinColumn(name  = "PatientID"),
-//          inverseJoinColumns = @JoinColumn(name = "DoctorID"))
 
     @Override
     public boolean equals(Object o) {

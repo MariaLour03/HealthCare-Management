@@ -112,10 +112,6 @@ public class Main {
                         System.out.println("Date of Birth: " + patient.getDateOfBirth());
                         System.out.println("Email: " + patient.getEmail());
                         System.out.println("Phone: " + patient.getPhoneNumber());
-                        // List doctors for patient --------------------------------------->
-//                        for(Doctor doctor1 : patient.getDoctors())
-//                            System.out.println(doctor1);
-//                        System.out.println(patient.getDoctors().size());
 
                     } else {
                         System.out.println("Patient not found.");
@@ -187,15 +183,6 @@ public class Main {
                     newDoctor.setSpecialty(scanner.nextLine());
                     System.out.print("Enter email: ");
                     newDoctor.setEmail(scanner.nextLine());
-
-//                    // Add patient to doctor -------------------->
-//                    Set<Patient> patients = new HashSet<>();
-//                    Patient patient = new Patient();
-//
-//                    System.out.print("Enter Patient ID for this doctor: ");
-//                    patient.setPatientId(scanner.nextInt());
-//                    patients.add(patient);
-//                    newDoctor.setPatients(patients);
 
                     doctorService.createDoctor(newDoctor);  // Use service here
                     System.out.println("Doctor created successfully.");

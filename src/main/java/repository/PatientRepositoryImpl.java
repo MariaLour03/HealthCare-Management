@@ -26,11 +26,7 @@ public class PatientRepositoryImpl {
 
     public Patient getPatientById(int patientId) {
         try (Session session = sessionFactory.openSession()) {
-            Patient patient = session.get(Patient.class, patientId);
-            patient.setDoctors(patient.getDoctors());
-            for(Doctor doctor1 : patient.getDoctors())
-                System.out.println(doctor1);
-            return patient;
+            return session.get(Patient.class, patientId);
         }
     }
 
