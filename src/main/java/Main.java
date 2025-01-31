@@ -10,9 +10,7 @@ import service.AppointmentService;
 import service.DoctorService;
 import service.PatientService;
 
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -50,12 +48,12 @@ public class Main {
                     manageAppointments(appointmentService, scanner);
                     break;
                 case 4:
-                    System.out.println("\nExiting Main Menu");
+                    System.out.println("Exiting Main Menu");
                     scanner.close();
                     sessionFactory.close();
                     return;
                 default:
-                    System.out.println("\nInvalid choice. Please try again.\n");
+                    System.out.println("Invalid choice. Please try again.");
             }
         }
     }
@@ -88,20 +86,10 @@ public class Main {
                     System.out.print("Enter phone number: ");
                     newPatient.setPhoneNumber(scanner.nextLine());
 
-                    // Add doctor to patient ---------------------------->
-                    Set<Doctor> doctors = new HashSet<>();
-                    Doctor doctor = new Doctor();
-
-                    System.out.print("Enter Doctor ID for this patient: ");
-                    doctor.setDoctorId(scanner.nextInt()); // Enter Existing DoctorId
-                    doctors.add(doctor);
-                    newPatient.setDoctors(doctors);
-
                     patientService.createPatient(newPatient);  // Use service here
                     System.out.println("Patient created successfully.");
                     break;
-
-                    case 2:   // Code to read patient details by ID
+                case 2:   // Code to read patient details by ID
                     // Application calls the service layer, not the repository directly
                     System.out.print("Enter Patient ID: ");
                     int patientId = scanner.nextInt();
@@ -112,12 +100,10 @@ public class Main {
                         System.out.println("Date of Birth: " + patient.getDateOfBirth());
                         System.out.println("Email: " + patient.getEmail());
                         System.out.println("Phone: " + patient.getPhoneNumber());
-
                     } else {
                         System.out.println("Patient not found.");
                     }
                     break;
-
                 case 3:  // Code to update patient details
                     // Application calls the service layer, not the repository directly
                     System.out.print("Enter Patient ID: ");
@@ -135,14 +121,12 @@ public class Main {
                         patient.setEmail(scanner.nextLine());
                         System.out.print("Enter new phone number: ");
                         patient.setPhoneNumber(scanner.nextLine());
-
                         patientService.updatePatient(patient);  // Use service here
                         System.out.println("Patient updated successfully.");
                     } else {
                         System.out.println("Patient not found.");
                     }
                     break;
-
                 case 4:   // Code to delete a patient by ID
                     // Application calls the service layer, not the repository directly
                     System.out.print("Enter Patient ID: ");
@@ -197,10 +181,6 @@ public class Main {
                         System.out.println("Name: " + doctor.getFirstName() + " " + doctor.getLastName());
                         System.out.println("Email: " + doctor.getEmail());
                         System.out.println("Specialty: " + doctor.getSpecialty());
-                        // List patients for doctor ------------------------------------->
-                        for(Patient patient : doctor.getPatients()) {
-                            System.out.println(patient);
-                        }
                     } else {
                         System.out.println("Doctor not found.");
                     }
@@ -260,15 +240,10 @@ public class Main {
                     // Application calls the service layer, not the repository directly
                     Appointment newAppointment = new Appointment();
                     System.out.print("Enter Patient ID: ");
-                    Patient patient = new Patient();
-                    patient.setPatientId(scanner.nextInt());
-                    newAppointment.setPatient(patient);
+                    newAppointment.setPatientId(scanner.nextInt());
                     System.out.print("Enter Doctor ID: ");
-                    Doctor doctor = new Doctor();
-                    doctor.setDoctorId(scanner.nextInt());
-                    newAppointment.setDoctor(doctor);
-                    scanner.nextLine();
-                    System.out.print("Enter Appointment Date (YYYY-MM-DD): ");
+                    newAppointment.setDoctorId(scanner.nextInt());
+                    System.out.print("Enter Appointment Date: ");
                     newAppointment.setAppointmentDate(scanner.nextLine());
                     System.out.print("Enter Notes: ");
                     newAppointment.setNotes(scanner.nextLine());
@@ -276,15 +251,15 @@ public class Main {
                     appointmentService.createAppointment(newAppointment);  // Use service here
                     System.out.println("Appointment created successfully.");
                     break;
-                    case 2:  // Code to read appointment details by ID
+                case 2:  // Code to read appointment details by ID
                     // Application calls the service layer, not the repository directly
                     System.out.print("Enter Appointment ID: ");
                     int appointmentId = scanner.nextInt();
                     Appointment appointment = appointmentService.getAppointmentById(appointmentId);// Use service here
                     if (appointment != null) {
                         System.out.println("Appointment ID: " + appointment.getAppointmentId());
-                        System.out.println("Patient ID: " + appointment.getPatient());
-                        System.out.println("Doctor ID: " + appointment.getDoctor());
+                        System.out.println("Patient ID: " + appointment.getDoctorId());
+                        System.out.println("Doctor ID: " + appointment.getDoctorId());
                         System.out.println("Appointment Date: " + appointment.getAppointmentDate());
                         System.out.println("Notes: " + appointment.getNotes());
                     } else {
@@ -299,15 +274,9 @@ public class Main {
                     appointment = appointmentService.getAppointmentById(appointmentId);  // Use service here
                     if (appointment != null) {
                         System.out.print("Enter Patient ID: ");
-                        patient = new Patient();
-                        patient.setPatientId(scanner.nextInt());
-                        appointment.setPatient(patient);
-                        scanner.nextLine();
+                        appointment.setPatientId(scanner.nextInt());
                         System.out.print("Enter Doctor ID: ");
-                        doctor = new Doctor();
-                        doctor.setDoctorId(scanner.nextInt());
-                        appointment.setDoctor(doctor);
-                        scanner.nextLine();
+                        appointment.setDoctorId(scanner.nextInt());
                         System.out.print("Enter Appointment Date: ");
                         appointment.setAppointmentDate(scanner.nextLine());
                         System.out.print("Enter Notes: ");
