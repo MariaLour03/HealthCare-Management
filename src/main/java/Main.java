@@ -230,18 +230,22 @@ public class Main {
                     System.out.print("Enter Doctor ID: ");
                     doctorId = scanner.nextInt();
                     Doctor doctor2 = doctorService.getDoctorById(doctorId);
+                
+                    Set<Appointment> apts = new HashSet<Appointment>();
                     if (doctor2 != null) {
-                       if (doctor2.getAppointments()!=null && !doctor2.getAppointments().isEmpty()) {
-                           System.out.println("Doctor ID:"  + doctor2.getDoctorId() + " has " +
-                                   doctor2.getAppointments().size() + " appointments. " +
-                                   "Please delete all of the above appointments before deleting this Doctor");
-                           break;
-                       }
+                        apts = doctor2.getAppointments(); // get all the appointments of this doctorId
                     }
-                    else {
-                        System.out.println("Doctor not found.");
-                        break;
+                    // Delete all appointments for this doctorId
+                    for (Appointment appointment : apts) {
+
+                        if (!appointmentService.hasOtherAppointmentsBetween(
+                                appointment.getDoctor().getDoctorId(), appointment.getPatient().getPatientId())) {
+                            doctorService.removePatientFromDoctor(appointment.getDoctor().getDoctorId(), appointment.getPatient());
+                            patientService.removeDoctorFromPatient(appointment.getPatient().getPatientId(), appointment.getDoctor());
+                        }
+                        appointmentService.deleteAppointment(appointment.getAppointmentId());
                     }
+
                     doctorService.deleteDoctor(doctorId);  // Use service here
                     System.out.println("Doctor deleted successfully.");
                     break;
