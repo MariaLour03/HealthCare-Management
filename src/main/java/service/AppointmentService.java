@@ -29,8 +29,11 @@ public class AppointmentService {
         appointmentRepository.updateAppointment(appointment);
     }
 
-    public void deleteDoctor(int id) {
-        appointmentRepository.deleteAppointment(id);
+    public void deleteAppointment(int appointmentId){
+        appointmentRepository.deleteAppointment(appointmentId);
+    }
+
+    public boolean hasOtherAppointmentsBetween(int doctorId, int patientId) {
+        return appointmentRepository.hasOtherAppointmentsBetween(doctorId, patientId);
     }
 }
-

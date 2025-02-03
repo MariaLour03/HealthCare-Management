@@ -34,11 +34,11 @@ public class Patient {
     private String phoneNumber;
 
     // Relationship
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient",cascade = CascadeType.PERSIST)
     private Set<Appointment> appointments = new HashSet<>();
 
-    @ManyToMany(mappedBy ="patients" )
-    private Set<Doctor> doctors = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "patients" ,cascade=CascadeType.PERSIST)
+      private Set<Doctor> doctors = new HashSet<>();
 
 
     @Override

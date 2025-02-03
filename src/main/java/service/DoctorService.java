@@ -1,6 +1,7 @@
 package service;
 
 import model.Doctor;
+import model.Patient;
 import repository.DoctorRepositoryImpl;
 
 import java.util.List;
@@ -33,4 +34,11 @@ public class DoctorService {
         doctorRepository.deleteDoctor(id);
     }
 
+    public void addPatientToDoctor(int doctorId, Patient patient) {
+        doctorRepository.addPatientToDoctor(doctorId, patient);
+    }
+
+    public void removePatientFromDoctor(int doctorId, Patient patient) {
+        doctorRepository.removePatientFromDoctor(doctorId, patient);
+    }
 }

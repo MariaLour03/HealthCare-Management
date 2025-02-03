@@ -2,10 +2,8 @@ package model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
+
 
 @Data
 @Entity
@@ -16,12 +14,6 @@ public class Appointment {
     @Column(name = "AppointmentID")
     private int appointmentId;
 
-//    @Column(name = "PatientID")
-//    private int patientId;
-//
-//    @Column(name = "DoctorID")
-//    private int doctorId;
-
     @Column(name = "AppointmentDate")
     private String appointmentDate;
 
@@ -30,11 +22,11 @@ public class Appointment {
 
     // Relationship
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "DoctorID")
+    @JoinColumn(name = "DoctorID",referencedColumnName = "DoctorID",nullable = false)
     private Doctor doctor;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "PatientID")
+    @JoinColumn(name = "PatientID",referencedColumnName = "PatientID",nullable = false)
     private Patient patient;
 
 

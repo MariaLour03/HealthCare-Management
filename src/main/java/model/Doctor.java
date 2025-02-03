@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Data
-@ToString(exclude = {"patients", "appointments"})
+@ToString(exclude = {"patients", "appointments","office"})
 @Entity
 @Table(name = "Doctors")
 public class Doctor {
@@ -30,16 +30,20 @@ public class Doctor {
     private String email;
 
    // Relationship
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor",cascade = CascadeType.PERSIST)
     private Set<Appointment> appointments = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST })
     @JoinTable(
             name = "patient_doctor",
             joinColumns = @JoinColumn(name  = "DoctorID"),
             inverseJoinColumns = @JoinColumn(name = "PatientID")
     )
     private Set<Patient> patients = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "doctor",cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "OfficeID")
+    private Office office;
 
     @Override
     public boolean equals(Object o) {
