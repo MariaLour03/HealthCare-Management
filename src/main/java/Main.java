@@ -375,7 +375,8 @@ public class Main {
             System.out.println("2. Read Office by ID");
             System.out.println("3. Update Office");
             System.out.println("4. Delete Office");
-            System.out.println("5. Return to Main Menu");
+            System.out.println("5. List all Offices");
+            System.out.println("6. Return to Main Menu");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
@@ -445,7 +446,12 @@ public class Main {
                     officeService.deleteOffice(officeId);  // Use service here
                     System.out.println("Office deleted successfully.");
                     break;
-                case 5:
+                 case 5:  // Code to list all offices
+                    // Application calls the service layer, not the repository directly
+                    System.out.print("List all Offices\n");
+                    System.out.println(officeService.getAllOffices());
+                    break;
+                case 6:
                     return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
